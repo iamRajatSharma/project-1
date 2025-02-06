@@ -98,7 +98,7 @@ const updateProduct = async (req, res) => {
         product.price = price;
         product.category = category;
         product.stock = stock;
-        product.image = ["img-1", "img-2"];
+        product.image = image;
         product.save()
 
 
