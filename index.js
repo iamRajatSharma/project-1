@@ -4,7 +4,7 @@ const cors = require("cors");
 const { authRouter } = require("./src/routes/auth");
 const router = require("./src/routes");
 require('dotenv').config();
-const database = require("./utils/database")
+const database = require("./src/utils/database")
 const PORT = process.env.PORT
 
 app.use(cors())
