@@ -1,10 +1,11 @@
 const express = require("express");
-const { addProduct, getProduct } = require("../controllers/product");
+const { addProduct, getProduct, myProduct } = require("../controllers/product");
 const productRouter = express.Router();
-const { checkRole } = require("../middlewares/auth")
+const { checkRole, validateToken } = require("../middlewares/auth")
 
-productRouter.post("/", addProduct)
-productRouter.get("/", checkRole, getProduct)
+productRouter.post("/", validateToken, checkRole, addProduct)
+productRouter.get("/myProducts", validateToken, myProduct)
+productRouter.get("/", getProduct)
 
 
 

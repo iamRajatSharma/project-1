@@ -10,18 +10,16 @@ const signIn = async (req, res) => {
         if (!checkUser) {
             return res.json({ message: "Email is not registered with us." })
         }
-
         const checkPassword = compareSync(password, checkUser.password)
         if (!checkPassword) {
             return res.json({ message: "Incorrect Email OR Password" })
         }
-
         const token = jwt.sign({ userId: checkUser._id }, process.env.JWT_SECRET)
 
         return res.json({ message: "Login Successfully", token })
     }
     catch (e) {
-        console.log('error')
+        console.log("singin")
         return res.json({ e })
     }
 }
@@ -29,7 +27,7 @@ const signIn = async (req, res) => {
 
 const signUp = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
 
         const checkUser = await User.findOne({ email })
         if (checkUser) {
@@ -40,12 +38,13 @@ const signUp = async (req, res) => {
         user.name = name;
         user.email = email;
         user.password = hashSync(password, 10);
+        user.role = role
         user.save();
 
         return res.json({ message: "Account created Successfully", user: user })
     }
-    catch (e) {
-        return res.json(e)
+    catch (error) {
+        return res.json(error)
     }
 }
 

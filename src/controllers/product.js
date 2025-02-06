@@ -3,12 +3,9 @@ const Product = require("../models/Product");
 const getProduct = async (req, res) => {
     try {
         const products = await Product.find()
-        console.log("products")
-
         return res.json({ message: "Product fetched Successfully", products: products })
     }
     catch (e) {
-        console.log('error')
         return res.json({ e })
     }
 }
@@ -22,7 +19,7 @@ const addProduct = async (req, res) => {
         }
 
         const product = new Product()
-        product.name = name;
+        product.name = name
         product.description = description;
         product.price = price
         product.category = category
@@ -38,6 +35,14 @@ const addProduct = async (req, res) => {
     }
 }
 
+const myProduct = async (req, res) => {
+    try {
+        const products = await Product.find({ addBy: req.userId })
+        return res.json({ message: "Product fetched Successfully", products: products })
+    }
+    catch (error) {
+        return res.json(error)
+    }
+}
 
-
-module.exports = { addProduct, getProduct }
+module.exports = { addProduct, getProduct, myProduct }
